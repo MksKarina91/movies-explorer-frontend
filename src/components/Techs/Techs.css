@@ -1,0 +1,134 @@
+.techs {
+  padding: 0 5.47%;
+  background-color: #272727;
+}
+
+.techs__heading {
+  margin: 0;
+  padding: 100px 0 23px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  border-bottom: 1px solid #dadada;
+}
+
+.techs__description {
+  padding: 90px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px 0;
+}
+
+.techs__description-heading {
+  margin: 0;
+  text-align: center;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+}
+
+.techs__description-paragraph {
+  margin: 0;
+  max-width: 460px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+
+.techs__technology-list {
+  margin: 0 auto;
+  padding: 100px 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(7, 90px);
+  justify-content: center;
+  gap: 10px;
+}
+
+.techs__technology-item {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #303030;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: -0.04em;
+}
+
+@media (max-width: 768px) {
+  .techs {
+    padding: 0 6.51%;
+  }
+
+  .techs__heading {
+    padding-top: 90px;
+  }
+
+  .techs__description {
+    padding-top: 80px;
+    gap: 22px 0;
+  }
+
+  .techs__description-paragraph {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .techs__technology-list {
+    padding: 83px 0 90px;
+    grid-template-columns: repeat(auto-fit, 84px);
+  }
+
+  .techs__technology-item {
+    height: 57px;
+  }
+
+  .techs__technology-item {
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.04em;
+  }
+}
+
+@media (max-width: 320px) {
+  .techs {
+    padding: 0 18px;
+    background-color: inherit;
+  }
+
+  .techs__heading {
+    padding: 70px 0 28px;
+    font-size: 18px;
+    line-height: 22px;
+    border-bottom-color: #000000;
+  }
+
+  .techs__description {
+    padding-top: 60px;
+    gap: 24px 0;
+  }
+
+  .techs__technology-list {
+    max-width: 271px;
+    padding: 50px 0 70px;
+  }
+
+  .techs__description-heading {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .techs__description-paragraph {
+    font-size: 11px;
+    line-height: 16px;
+  }
+}

@@ -1,0 +1,151 @@
+.about {
+  padding: 0 5.47%;
+}
+
+.about__heading {
+  margin: 0;
+  padding: 110px 0 23px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  text-align: left;
+  border-bottom: 1px #dadada solid;
+}
+
+.about__information-containers {
+  padding: 70px 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 0 40px;
+}
+
+.about__information-container {
+  max-width: 550px;
+}
+
+.about__information-heading {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+.about__information-paragraph {
+  margin: 0;
+  padding: 26px 0 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.about__diagram {
+  padding: 110px 0;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: minmax(100px, 228px) minmax(184px, 912px);
+}
+
+.about__diagram-backend-week {
+  width: 100%;
+  margin: 0;
+  padding: 9px 0;
+  background-color: #3ddc84;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  color: #000000;
+}
+
+.about__diagram-frontend-week {
+  margin: 0;
+  padding: 9px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  background-color: #303030;
+  color: #ffffff;
+}
+
+.about__diagram-area {
+  margin: 0;
+  padding: 14px 0 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  color: #8b8b8b;
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 0 6.51%;
+  }
+
+  .about__heading {
+    padding-top: 90px;
+  }
+
+  .about__information-paragraph {
+    padding: 22px 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about__diagram {
+    padding: 93px 0 90px;
+    grid-template-columns: minmax(100px, 140px) minmax(184px, 912px);
+  }
+}
+
+@media (max-width: 320px) {
+  .about {
+    padding: 0 5.63%;
+  }
+
+  .about__heading {
+    padding: 70px 0 28px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about__information-containers {
+    padding-top: 60px;
+    flex-direction: column;
+    gap: 56px 0;
+  }
+
+  .about__information-heading {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about__information-paragraph {
+    padding-top: 16px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about__diagram {
+    padding: 60px 0 69px;
+  }
+
+  .about__diagram-backend-week {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about__diagram-frontend-week {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about__diagram-area {
+    padding-top: 10px;
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
