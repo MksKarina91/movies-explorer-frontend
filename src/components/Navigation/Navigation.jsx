@@ -1,28 +1,32 @@
 import './Navigation.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Navigation({ loggedIn }) {
+  const location = useLocation();
+
+  // Функция для определения класса на основе текущего пути
+  const getIconClassName = () => {
+    return location.pathname === '/' ? 'navigation-auth__link-icon--home' : 'navigation-auth__link-icon--other';
+  };
   return (
     <>
       {loggedIn ? (
         <nav className='navigation-auth'>
-          <ul className='navigation-auth__authorized'>
-            <div className='navigation-auth__links-container'>
-              <li className='navigation-auth__list-item'>
+         <ul className='navigation-auth__authorized'>
+            <li className='navigation-auth__list-item'>
+              <div className='navigation-auth__links-container'>
                 <Link className='navigation-auth__link' to='/movies'>
                   Фильмы
                 </Link>
-              </li>
-              <li className='navigation-auth__list-item'>
                 <Link className='navigation-auth__link' to='/saved-movies'>
                   Сохранённые фильмы
                 </Link>
-              </li>
             </div>
+            </li>
             <li className='navigation-auth__list-item'>
               <Link className='navigation-auth__profile-link' to='/profile'>
                 Аккаунт
-                <div className='navigation-auth__link-icon'></div>
+                <div className={`navigation-auth__link-icon ${getIconClassName()}`}></div>
               </Link>
             </li>
           </ul>

@@ -6,7 +6,7 @@ function SearchForm({ name }) {
     <section className='search-form'>
       <form className='search-form__form' name={name}>
         <fieldset className='search-form__fieldset'>
-          <img className='search-form__loupe' src={loupe} alt='Лупа. Поиск фильмов.' />
+          <img className='search-form__loupe' src={loupe} alt='Лупа' />
           <div className='search-form__search-container'>
             <input className='search-form__input-search' type='text' placeholder='Фильм' required />
             <button className='search-form__button'>Найти</button>

@@ -17,11 +17,11 @@
   padding: 70px 0 0;
   display: flex;
   justify-content: center;
-  gap: 0 40px;
+  gap: 40px;
 }
 
 .about__information-container {
-  max-width: 550px;
+  width: 550px;
 }
 
 .about__information-heading {
@@ -30,6 +30,7 @@
   font-weight: 400;
   line-height: 24px;
   letter-spacing: -0.04em;
+  text-align: left;
 }
 
 .about__information-paragraph {
@@ -38,6 +39,7 @@
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
+  text-align: left;
 }
 
 .about__diagram {

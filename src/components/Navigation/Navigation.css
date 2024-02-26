@@ -45,6 +45,10 @@
   background-color: #0f4157;
 }
 
+.navigation-auth__link-icon--other {
+  background-color: #313131;
+}
+
 .navigation-unauth {
   width: 100%;
 }

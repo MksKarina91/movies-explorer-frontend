@@ -41,7 +41,6 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .portfolio__project-container:last-child {
@@ -83,7 +82,7 @@
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 420px) {
   .portfolio {
     padding: 0 4.38%;
   }

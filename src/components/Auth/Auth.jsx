@@ -22,14 +22,14 @@ function Auth({ name }) {
         ) : name === 'signup' ? (
           <div className='auth__authorization'>
             <Link to='/'>
-              <img className='auth__logo' src={logo} alt='logo' />
+              <img className='auth__logo' src={logo} alt='Логотип' />
             </Link>
             <h2 className='auth__heading'>Добро пожаловать!</h2>
             <Form name='signup'>
               <fieldset className='auth__fieldset'>
-                <Input label='Имя' type='text' />
-                <Input label='E-mail' type='email' />
-                <Input label='Пароль' type='password' />
+                <Input label='Имя' type='text' placeholder='Введите ваше имя' />
+                <Input label='E-mail' type='email' placeholder='Введите ваш email' />
+                <Input label='Пароль' type='password' placeholder='Введите пароль' />
                 <span className='auth__input-error'>Что-то пошло не так...</span>
               </fieldset>
             </Form>
@@ -43,13 +43,13 @@ function Auth({ name }) {
         ) : name === 'signin' ? (
           <div className='auth__authorization'>
             <Link to='/'>
-              <img className='auth__logo' src={logo} alt='logo' />
+              <img className='auth__logo' src={logo} alt='Логотип' />
             </Link>
             <h2 className='auth__heading'>Рады видеть!</h2>
             <Form name='signin'>
               <fieldset className='auth__fieldset'>
-                <Input label='E-mail' type='email' />
-                <Input label='Пароль' type='password' />
+                <Input label='E-mail' type='email' placeholder='Введите ваш email' />
+                <Input label='Пароль' type='password' placeholder='Введите пароль' />
               </fieldset>
             </Form>
             <p className='auth__paragraph'>
