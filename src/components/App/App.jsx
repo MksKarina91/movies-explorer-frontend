@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Header from './Header/Header';
-import Main from './Main/Main';
-import MoviesCardList from './MoviesCardList/MoviesCardList';
-import Footer from './Footer/Footer';
-import Auth from './Auth/Auth';
-import Page404 from './Page404/Page404';
+import Header from '../Header/Header';
+import Main from '../Main/Main';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import Footer from '../Footer/Footer';
+import Auth from '../Auth/Auth';
+import Page404 from '../Page404/Page404';
 
 function App() {
   const [loggedIn] = useState(true);

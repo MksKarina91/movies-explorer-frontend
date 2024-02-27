@@ -63,6 +63,10 @@
   color: #ffffff;
 }
 
+.aside__link_active {
+  text-decoration: underline;
+}
+
 .aside__unordered-list-container > .aside__list-item:nth-child(2) {
   text-decoration: underline;
   text-decoration-thickness: 2px;

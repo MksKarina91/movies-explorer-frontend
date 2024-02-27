@@ -10,7 +10,7 @@
   margin: 0;
   font-size: 24px;
   font-weight: 500;
-  line-height: 29px;
+  line-height: 29.05px;
 }
 
 .profile__fieldset {
@@ -47,7 +47,7 @@
   margin: 40px 0;
   font-size: 24px;
   font-weight: 500;
-  line-height: 29px;
+  line-height: 29.05px;
 }
 
 .auth__fieldset {

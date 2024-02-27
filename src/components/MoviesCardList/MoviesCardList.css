@@ -27,8 +27,14 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
+}
+
+.card-list__add-button:hover {
+  opacity: 0.8;
+  transition: opacity 0.5s;
   cursor: pointer;
 }
+
 
 @media (max-width: 768px) {
   .card-list {
@@ -51,6 +57,9 @@
 }
 
 @media (max-width: 444px) {
+  .card-list {
+    margin-bottom: 0;
+  }
   .card-list__add-button {
     width: 240px;
   }

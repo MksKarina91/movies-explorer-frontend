@@ -8,6 +8,9 @@ function Navigation({ loggedIn }) {
   const getIconClassName = () => {
     return location.pathname === '/' ? 'navigation-auth__link-icon--home' : 'navigation-auth__link-icon--other';
   };
+
+  const isActive = (path) => location.pathname === path;
+
   return (
     <>
       {loggedIn ? (
@@ -15,16 +18,25 @@ function Navigation({ loggedIn }) {
          <ul className='navigation-auth__authorized'>
             <li className='navigation-auth__list-item'>
               <div className='navigation-auth__links-container'>
-                <Link className='navigation-auth__link' to='/movies'>
+                 <Link
+                  className={`navigation-auth__link ${isActive('/movies') ? 'navigation-auth__link--active' : ''}`}
+                  to='/movies'
+                >
                   Фильмы
                 </Link>
-                <Link className='navigation-auth__link' to='/saved-movies'>
+                <Link
+                  className={`navigation-auth__link ${isActive('/saved-movies') ? 'navigation-auth__link--active' : ''}`}
+                  to='/saved-movies'
+                >
                   Сохранённые фильмы
                 </Link>
             </div>
             </li>
             <li className='navigation-auth__list-item'>
-              <Link className='navigation-auth__profile-link' to='/profile'>
+            <Link
+                className={`navigation-auth__profile-link ${isActive('/profile') ? 'navigation-auth__link--active' : ''}`}
+                to='/profile'
+              >
                 Аккаунт
                 <div className={`navigation-auth__link-icon ${getIconClassName()}`}></div>
               </Link>
