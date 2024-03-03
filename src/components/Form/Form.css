@@ -1,0 +1,54 @@
+.form {
+  width: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form__signup {
+  row-gap: 134px;
+}
+
+.form__signin {
+  row-gap: 221px;
+}
+
+.form__profile-button {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #ffffff;
+  border: none;
+  background-color: inherit;
+}
+
+.form__auth-button {
+  padding: 0;
+  width: 100%;
+  height: 45px;
+  background-color: #4285f4;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 17px;
+  border: none;
+}
+
+@media (max-width: 320px) {
+  .form__signup {
+    row-gap: 222px;
+  }
+
+  .form__signin {
+    row-gap: 309px;
+  }
+
+  .form__auth-button {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14.52px;
+  }
+}

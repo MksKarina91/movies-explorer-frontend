@@ -1,0 +1,119 @@
+.aside {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.aside__container {
+  width: 67.71%;
+  height: 100%;
+  margin-left: auto;
+  background-color: #202020;
+  display: flex;
+  flex-direction: column;
+  row-gap: 105px;
+}
+
+.aside__close-button {
+  margin: 22px 22px 0 0;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  align-self: flex-end;
+  border: none;
+  background-image: url('../../images/closeButton.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: inherit;
+}
+
+.aside__navigation {
+  height: 100%;
+}
+
+.aside__unordered-list {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+}
+
+.aside__unordered-list-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 28px;
+}
+
+.aside__link {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.aside__link_active {
+  text-decoration: underline;
+}
+
+.aside__unordered-list-container > .aside__list-item:nth-child(2) {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.aside__profile-list-item {
+  margin: auto 0 93px;
+  justify-self: flex-end;
+}
+
+.aside__link-icon {
+  width: 26px;
+  height: 26px;
+  background-image: url('../../images/profileIcon.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50px;
+  background-color: #313131;
+}
+
+.aside__profile-link {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 12px;
+  color: #ffffff;
+  gap: 0 7px;
+  text-decoration: none;
+}
+
+.aside__list-item-profile {
+  justify-self: end;
+}
+
+.aside_opened {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 320px) {
+  .aside__container {
+    width: 100%;
+  }
+
+  .aside__profile-list-item {
+    margin-bottom: 55px;
+  }
+}
