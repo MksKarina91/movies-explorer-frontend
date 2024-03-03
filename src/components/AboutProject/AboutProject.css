@@ -43,7 +43,7 @@
 }
 
 .about__diagram {
-  padding: 110px 0;
+  padding: 0;
   display: grid;
   justify-content: center;
   grid-template-columns: minmax(100px, 228px) minmax(184px, 912px);
@@ -52,7 +52,7 @@
 .about__diagram-backend-week {
   width: 100%;
   margin: 0;
-  padding: 9px 0;
+  padding: 10px 0;
   background-color: #3ddc84;
   text-align: center;
   font-size: 14px;
@@ -63,7 +63,7 @@
 
 .about__diagram-frontend-week {
   margin: 0;
-  padding: 9px 0;
+  padding: 10px 0;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
@@ -74,7 +74,7 @@
 
 .about__diagram-area {
   margin: 0;
-  padding: 14px 0 0;
+  padding: 12px 0 0;
   text-align: center;
   font-size: 14px;
   font-weight: 500;
@@ -87,10 +87,6 @@
     padding: 90px 50px 90px 50px;
   }
 
-  .about__heading {
-    padding-top: 90px;
-  }
-
   .about__information-paragraph {
     padding: 22px 0 0;
     font-size: 12px;
@@ -98,14 +94,21 @@
   }
 
   .about__diagram {
-    padding: 93px 0 90px;
+    padding: 0;
     grid-template-columns: minmax(100px, 140px) minmax(184px, 912px);
   }
+   .about__information-containers {
+    padding: 70px 0 92px;
+   }
+
+   .about__diagram-area {
+    padding: 14px 0 0;
+   }
 }
 
 @media (max-width: 320px) {
   .about {
-    padding: 70px 18px 69px 18px;
+    padding: 0 18px 69px 18px;
   }
 
   .about__heading {
@@ -115,7 +118,7 @@
   }
 
   .about__information-containers {
-    padding-top: 60px;
+    padding: 60px 0 0 0;
     flex-direction: column;
     gap: 56px 0;
   }
@@ -146,7 +149,6 @@
   }
 
   .about__diagram-area {
-    padding-top: 10px;
     font-size: 11px;
     line-height: 13px;
   }

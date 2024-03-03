@@ -45,4 +45,10 @@
   .form__signin {
     row-gap: 309px;
   }
+
+  .form__auth-button {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14.52px;
+  }
 }

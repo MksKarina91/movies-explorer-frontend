@@ -1,4 +1,5 @@
 import './Portfolio.css';
+import icon from '../../images/portfolioIcon.svg';
 
 function Portfolio() {
   return (
@@ -9,19 +10,22 @@ function Portfolio() {
           <li className='portfolio__list-item'>
             <a className='portfolio__link' href='https://github.com/MksKarina91/how-to-learn/' target='_blank' rel='noopener noreferrer'>
               <h3 className='portfolio__project'>Статичный сайт</h3>
-              <div className='portfolio__icon' />
+              <img className='portfolio__icon' src={icon}
+              alt='Ссылка на портфолио'/>
             </a>
           </li>
           <li className='portfolio__list-item'>
             <a className='portfolio__link' href='https://github.com/MksKarina91/russian-travel/' target='_blank' rel='noopener noreferrer'>
               <h3 className='portfolio__project'>Адаптивный сайт</h3>
-              <div className='portfolio__icon' />
+              <img className='portfolio__icon' src={icon}
+              alt='Ссылка на портфолио'/>
             </a>
           </li>
           <li className='portfolio__list-item'>
             <a className='portfolio__link' href='https://github.com/MksKarina91/react-mesto-api-full-gha/' target='_blank' rel='noopener noreferrer'>
               <h3 className='portfolio__project'>Одностраничное приложение</h3>
-              <div className='portfolio__icon' />
+              <img className='portfolio__icon' src={icon}
+              alt='Ссылка на портфолио'/>
             </a>
           </li>
         </ul>

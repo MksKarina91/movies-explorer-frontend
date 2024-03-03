@@ -36,7 +36,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .card-list {
     padding: 0 3.9%;
   }
@@ -58,7 +58,7 @@
 
 @media (max-width: 444px) {
   .card-list {
-    margin-bottom: 0;
+    margin: 50px auto 160px;
   }
   .card-list__add-button {
     width: 240px;

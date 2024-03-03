@@ -18,8 +18,8 @@ import image16 from '../images/pic-15.jpg';
 const filmsArray = [
   {
     image: image1,
-    name: 'Путешествие в прошлое',
-    time: '2ч 15м',
+    name: '33 слова о дизайне',
+    time: '1ч 42м',
   },
   {
     image: image2,

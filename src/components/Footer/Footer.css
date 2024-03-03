@@ -17,7 +17,7 @@
   margin: 0;
   font-size: 13px;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 15.73px;
 }
 
 .footer__container {
@@ -32,7 +32,7 @@
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 12px 20px;
+  gap: 6px 20px;
   list-style: none;
 }
 
@@ -40,7 +40,7 @@
   color: #ffffff;
   font-size: 13px;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 15.73px;
   text-decoration: none;
 }
 
@@ -63,7 +63,7 @@
   }
 
   .footer__container {
-    padding-top: 30px;
+    padding-top: 28px;
     justify-content: center;
     flex-direction: column-reverse;
   }
@@ -81,6 +81,6 @@
 
   .footer__link {
     font-size: 12px;
-    line-height: 15px;
+    line-height: 14.52px;
   }
 }
