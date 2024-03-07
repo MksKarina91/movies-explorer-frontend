@@ -2,7 +2,7 @@ export const MAIN_API_URL = 'https://api.movies-explorer.nomoredomainswork.ru';
 export const MOVIES_API_URL = 'https://api.nomoreparties.co';
 
 export const validationConfig = {
-    nameRegEx: /^[а-яА-ЯёЁa-zA-Z\s-]+$/, // Убран ненужный экранирующий символ
+    nameRegEx: /^[а-яА-ЯёЁa-zA-Z\s-]+$/,
     emailRegEx: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 };
 
