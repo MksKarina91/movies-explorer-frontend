@@ -1,0 +1,15 @@
+@import url('./fonts/Inter.css');
+@import url('./vendor/normalize.css');
+
+body {
+  margin: 0;
+  background-color: #202020;
+  width: 100%;
+}
+
+#root {
+  margin: 0 auto;
+  color: #ffffff;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  width: 100%;
+}
