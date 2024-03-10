@@ -72,6 +72,12 @@ function Movies({ handleSave, savedMovies }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (!localStorage.getItem("allMovies") || allMovies.length === 0) {
+      requestFilmApi();
+    }
+  }, [requestFilmApi, allMovies.length]);
+
   const filterShortMovies = useCallback((arr) => {
     return arr.filter((movie) => movie.duration <= SHORT_MOVIE_DURATION);
   }, []);
@@ -93,18 +99,15 @@ function Movies({ handleSave, savedMovies }) {
     localStorage.setItem("isToggleActive", JSON.stringify(isActive));
   }, [filterShortMovies, shownCards]);
 
-  const handleSearchButton = useCallback((query, currentToggleState) => {
+  const handleSearchButton = useCallback(async (query, currentToggleState) => {
     setShownCards(calculateInitialShownCards());
-    const storedMovies = JSON.parse(localStorage.getItem("allMovies"));
-    if (storedMovies && storedMovies.length) {
-      searchMovies(storedMovies, query, currentToggleState);
-    } else {
-      requestFilmApi().then(() => {
-        searchMovies(allMovies, query, currentToggleState);
-      });
+    if (allMovies.length === 0) {
+      await requestFilmApi();
     }
+    const storedMovies = JSON.parse(localStorage.getItem("allMovies")) || allMovies;
+    searchMovies(storedMovies, query, currentToggleState);
   }, [allMovies, requestFilmApi, searchMovies, calculateInitialShownCards]);
-  
+
   function resetSearchResults() {
     setFoundMovies([]);
     setShownMovies([]);
@@ -129,10 +132,9 @@ function Movies({ handleSave, savedMovies }) {
     if (savedFoundMovies && savedFoundMovies.length > 0) {
       setFoundMovies(savedFoundMovies);
       setShownMovies(savedFoundMovies.slice(0, shownCards));
-      setSearchQuery(savedSearchQuery || ""); // Обновите, даже если строка пуста
+      setSearchQuery(savedSearchQuery || "");
       setIsToggleActive(isToggleActiveState);
     } else {
-      // Сбрасываем состояния компонента, если в localStorage нет сохранённых значений
       setFoundMovies([]);
       setShownMovies([]);
       setSearchQuery("");
@@ -143,19 +145,21 @@ function Movies({ handleSave, savedMovies }) {
   
   function handleMoreButton() {
     let additionalCardsCount;
-    if (window.innerWidth >= DISPLAY_WIDTH_LARGE) {
-      additionalCardsCount = ROW_CARDS_EXTRA_LARGE;
+    if (window.innerWidth <= DISPLAY_WIDTH_SMALL) {
+      additionalCardsCount = ADDITIONAL_CARDS_SMALL;
+    }
+    else if (window.innerWidth > DISPLAY_WIDTH_SMALL && window.innerWidth < DISPLAY_WIDTH_MEDIUM) {
+      additionalCardsCount = ADDITIONAL_CARDS_SMALL;
     }
     else if (window.innerWidth >= DISPLAY_WIDTH_MEDIUM && window.innerWidth < DISPLAY_WIDTH_LARGE) {
       additionalCardsCount = ROW_CARDS_LARGE;
     }
-    else if (window.innerWidth > DISPLAY_WIDTH_SMALL && window.innerWidth < DISPLAY_WIDTH_MEDIUM) {
-      additionalCardsCount = ROW_CARDS_MEDIUM;
-    }
+    else if (window.innerWidth >= DISPLAY_WIDTH_LARGE && window.innerWidth < DISPLAY_WIDTH_EXTRA_LARGE) {
+      additionalCardsCount = ROW_CARDS_LARGE;
+    } 
     else {
-      additionalCardsCount = ADDITIONAL_CARDS_SMALL;
-    }
-  
+      additionalCardsCount = ROW_CARDS_EXTRA_LARGE;
+    }  
     setShownCards(prev => prev + additionalCardsCount);
   };  
 
