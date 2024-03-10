@@ -9,9 +9,8 @@
   margin: 0 auto 10px;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 270px);
-  gap: 38px 20px;
   list-style: none;
+  justify-items: center;
 }
 
 .movies-list__more {
@@ -48,32 +47,7 @@
   color: dimgray;
 }
 
-@media screen and (max-width: 1279px){
-  .movies-list__container{
-      justify-content: center;
-  }
-}
-
-@media screen and (max-width: 768px){
-  .movies-list__container{
-      margin: 0 auto;
-      grid-template-columns: repeat(auto-fill, 339px);
-      gap: 30px 30px;
-  }
-}
-
-@media screen and (max-width: 450px){
-  .movies-list__container{
-      justify-items: center;
-  }
-}
-
 @media screen and (max-width: 320px){
-  .movies-list__container{
-      grid-template-columns: repeat(auto-fill, 300px);
-      gap: 34px 0;
-  }
-
   .movies-list{
       padding: 40px 0 0;
       margin: 0 auto;
@@ -83,5 +57,32 @@
       width: 240px;
       height: 36px;
       margin-bottom: 80px;
+  }
+}
+
+@media screen and (max-width: 480px){
+  .movies-list__container{
+    grid-template-columns: repeat(1, 1fr); /* 1 карточка в ряд */
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px){
+  .movies-list__container{
+    grid-template-columns: repeat(2, 1fr); /* 2 карточки в ряд */
+    gap: 16px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1279px){
+  .movies-list__container{
+    grid-template-columns: repeat(3, 1fr); /* 3 карточки в ряд */
+    gap: 16px;
+  }
+}
+
+@media screen and (min-width: 1280px){
+  .movies-list__container{
+    grid-template-columns: repeat(4, 1fr); /* 4 карточки в ряд */
+    gap: 16px;
   }
 }

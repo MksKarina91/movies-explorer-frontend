@@ -4,14 +4,16 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import Preloader from "../Preloader/Preloader";
 import {
-  DISPLAY_CARD_COUNTER_WIDTH_LESS_768,
-  DISPLAY_CARD_COUNTER_WIDTH_MORE_768,
-  DISPLAY_CARD_WIDTH_LARGE,
-  DISPLAY_CARD_WIDTH_MEDIUM,
-  DISPLAY_CARD_WIDTH_SMALL,
+  INITIAL_CARDS_SMALL,
+  DISPLAY_WIDTH_SMALL,
+  ROW_CARDS_MEDIUM,
+  ROW_CARDS_LARGE,
+  ROW_CARDS_EXTRA_LARGE,
   DISPLAY_WIDTH_LARGE,
   DISPLAY_WIDTH_MEDIUM,
+  DISPLAY_WIDTH_EXTRA_LARGE,
   SHORT_MOVIE_DURATION,
+  ADDITIONAL_CARDS_SMALL
 } from "../../utils/constants";
 import { getAllMovies } from "../../utils/MovieApi";
 
@@ -23,17 +25,38 @@ function Movies({ handleSave, savedMovies }) {
   const [searchError, setSearchError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState(localStorage.getItem("searchQuery") || "");
-  
-  const calculateInitialShownCards = () => {
-    if (window.innerWidth >= DISPLAY_WIDTH_LARGE) {
-      return DISPLAY_CARD_WIDTH_LARGE;
-    } else if (window.innerWidth >= DISPLAY_WIDTH_MEDIUM) {
-      return DISPLAY_CARD_WIDTH_MEDIUM;
-    } else {
-      return DISPLAY_CARD_WIDTH_SMALL;
+  const [shownCards, setShownCards] = useState(0);
+
+  const calculateInitialShownCards = useCallback(() => {
+    if (window.innerWidth <= DISPLAY_WIDTH_SMALL) {
+      return INITIAL_CARDS_SMALL;
     }
-  };
-  const [shownCards, setShownCards] = useState(calculateInitialShownCards);
+    else if (window.innerWidth > DISPLAY_WIDTH_SMALL && window.innerWidth < DISPLAY_WIDTH_MEDIUM) {
+      return ROW_CARDS_MEDIUM * 4;
+    }
+    else if (window.innerWidth >= DISPLAY_WIDTH_MEDIUM && window.innerWidth < DISPLAY_WIDTH_LARGE) {
+      return ROW_CARDS_LARGE * 4;
+    }
+    else if (window.innerWidth >= DISPLAY_WIDTH_LARGE && window.innerWidth < DISPLAY_WIDTH_EXTRA_LARGE) {
+      return ROW_CARDS_LARGE * 4;
+    } 
+    else {
+      return ROW_CARDS_EXTRA_LARGE * 4;
+    }
+  }, []);
+  
+
+  useEffect(() => {
+    setShownCards(calculateInitialShownCards);
+  }, [calculateInitialShownCards]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShownCards(calculateInitialShownCards());
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [calculateInitialShownCards]);
 
   const requestFilmApi = useCallback(async () => {
     setIsLoading(true);
@@ -49,102 +72,132 @@ function Movies({ handleSave, savedMovies }) {
     }
   }, []);
 
- 
   const filterShortMovies = useCallback((arr) => {
     return arr.filter((movie) => movie.duration <= SHORT_MOVIE_DURATION);
   }, []);
 
-  const searchMovies = useCallback((arrMovies, searchQuery, isToggleActive) => {
+  const searchMovies = useCallback((arrMovies, query, isActive) => {
     let results = arrMovies.filter(
       (movie) =>
-        movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        movie.nameEN.toLowerCase().includes(searchQuery.toLowerCase())
+        movie.nameRU.toLowerCase().includes(query.toLowerCase()) ||
+        movie.nameEN.toLowerCase().includes(query.toLowerCase())
     );
-    if (isToggleActive) {
+    if (isActive) {
       results = filterShortMovies(results);
     }
     setFoundMovies(results);
-    setShownMovies(results);
+    setShownMovies(results.slice(0, shownCards));
     setSearchError(results.length ? "" : "Ничего не найдено");
     localStorage.setItem("foundMovies", JSON.stringify(results));
-  }, [filterShortMovies]);
+    localStorage.setItem("searchQuery", query);
+    localStorage.setItem("isToggleActive", JSON.stringify(isActive));
+  }, [filterShortMovies, shownCards]);
 
-  const handleSearchButton = useCallback((searchQuery, currentToggleState) => {
+  const handleSearchButton = useCallback((query, currentToggleState) => {
     setShownCards(calculateInitialShownCards());
-    
-    if (!searchQuery.trim()) {
-        setFoundMovies([]);
-        setShownMovies([]);
-        setSearchError('');
-        return;
-    }
-
     const storedMovies = JSON.parse(localStorage.getItem("allMovies"));
     if (storedMovies && storedMovies.length) {
-      searchMovies(storedMovies, searchQuery, currentToggleState);
+      searchMovies(storedMovies, query, currentToggleState);
     } else {
       requestFilmApi().then(() => {
-        searchMovies(allMovies, searchQuery, currentToggleState);
+        searchMovies(allMovies, query, currentToggleState);
       });
     }
-  }, [allMovies, requestFilmApi, searchMovies]);
-
-
-  useEffect(() => {
-    setIsToggleActive(prevState => !prevState);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("isToggleActive", isToggleActive);
-    handleSearchButton(searchQuery, isToggleActive);
-  }, [isToggleActive, handleSearchButton, searchQuery]);
-
-  useEffect(() => {
-    localStorage.setItem("searchQuery", searchQuery);
-  }, [searchQuery]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setShownCards(calculateInitialShownCards());
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  function handleMoreButton() {
-    const additionalCardsCount = window.innerWidth > DISPLAY_WIDTH_MEDIUM ? DISPLAY_CARD_COUNTER_WIDTH_MORE_768 : DISPLAY_CARD_COUNTER_WIDTH_LESS_768;
-    setShownCards(prev => prev + additionalCardsCount);
+  }, [allMovies, requestFilmApi, searchMovies, calculateInitialShownCards]);
+  
+  function resetSearchResults() {
+    setFoundMovies([]);
+    setShownMovies([]);
   }
 
+  const handleToggle = useCallback(() => {
+    setIsToggleActive(prevState => {
+      const newState = !prevState;
+      localStorage.setItem("isToggleActive", JSON.stringify(newState));
+      return newState;
+    });
+    if (searchQuery.trim()) {
+      handleSearchButton(searchQuery, !isToggleActive);
+    }
+  }, [isToggleActive, searchQuery, handleSearchButton]);
+
+  useEffect(() => {
+    const savedFoundMovies = JSON.parse(localStorage.getItem("foundMovies"));
+    const savedSearchQuery = localStorage.getItem("searchQuery");
+    const isToggleActiveState = JSON.parse(localStorage.getItem("isToggleActive")) || false;
+  
+    if (savedFoundMovies && savedFoundMovies.length > 0) {
+      setFoundMovies(savedFoundMovies);
+      setShownMovies(savedFoundMovies.slice(0, shownCards));
+      setSearchQuery(savedSearchQuery || ""); // Обновите, даже если строка пуста
+      setIsToggleActive(isToggleActiveState);
+    } else {
+      // Сбрасываем состояния компонента, если в localStorage нет сохранённых значений
+      setFoundMovies([]);
+      setShownMovies([]);
+      setSearchQuery("");
+      setIsToggleActive(false);
+      setSearchError("");
+    }
+  }, [shownCards]);
+  
+  function handleMoreButton() {
+    let additionalCardsCount;
+    if (window.innerWidth >= DISPLAY_WIDTH_LARGE) {
+      additionalCardsCount = ROW_CARDS_EXTRA_LARGE;
+    }
+    else if (window.innerWidth >= DISPLAY_WIDTH_MEDIUM && window.innerWidth < DISPLAY_WIDTH_LARGE) {
+      additionalCardsCount = ROW_CARDS_LARGE;
+    }
+    else if (window.innerWidth > DISPLAY_WIDTH_SMALL && window.innerWidth < DISPLAY_WIDTH_MEDIUM) {
+      additionalCardsCount = ROW_CARDS_MEDIUM;
+    }
+    else {
+      additionalCardsCount = ADDITIONAL_CARDS_SMALL;
+    }
+  
+    setShownCards(prev => prev + additionalCardsCount);
+  };  
+
   return (
-    <main>
-      <SearchForm
-        handleSearchButton={handleSearchButton}
-        filterShortMovies={filterShortMovies}
-        isToggleActive={isToggleActive}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        allMovies={allMovies}
-        handleToggle={() => setIsToggleActive(!isToggleActive)}
-        setSearchError={setSearchError}
-      />
-      {isLoading && <Preloader />}
+  <main>
+    <SearchForm
+      handleSearchButton={handleSearchButton}
+      isToggleActive={isToggleActive}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      handleToggle={handleToggle}
+      setSearchError={setSearchError}
+      resetSearchResults={resetSearchResults}
+    />
+
+    {isLoading && <Preloader />}
+    {!isLoading && searchError && (
+      <div className="movies-list__error">{searchError}</div>
+    )}
+    {!isLoading && !searchError && foundMovies.length === 0 && (
+      <div className="error-container">
+      <div className="movies-list__error">Ничего не найдено</div>
+      </div>
+    )}
+    {!isLoading && foundMovies.length > 0 && (
       <MoviesCardList
         savedMovies={savedMovies}
         handleSave={handleSave}
-        searchError={searchError}
         shownCards={shownCards}
         shownMovies={shownMovies}
       />
-      {foundMovies.length > 0 && foundMovies.length > shownCards && (
-        <section className="movies-list__more">
-          <button type="button" className="movies-list__more-btn" onClick={handleMoreButton}>
-            Ещё
-          </button>
-        </section>
-      )}
-    </main>
-  );
+    )}
+    {foundMovies.length > shownCards && (
+      <section className="movies-list__more">
+        <button type="button" className="movies-list__more-btn" onClick={handleMoreButton}>
+          Ещё
+        </button>
+      </section>
+    )}
+  </main>
+);
+
 }
 
 export default Movies;

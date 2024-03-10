@@ -10,9 +10,11 @@ function SearchForm({
   handleToggle,
   isToggleActive,
   setSearchError,
+  resetSearchResults
 }) {
   const location = useLocation();
   const [isErr, setIsErr] = useState(false);
+  
 
   useEffect(() => {
     if (localStorage.getItem("searchQuery") && location.pathname === "/movies") {
@@ -21,29 +23,29 @@ function SearchForm({
     }
   }, [location, setSearchQuery]);
 
-  function handleSearch() {
-    if (!searchQuery.length) {
+  function handleSearch(e) {
+    e.preventDefault();
+    if (!searchQuery.trim()) {
+      localStorage.removeItem("foundMovies");
+      localStorage.removeItem("searchQuery");
+      localStorage.removeItem("isToggleActive");
       setSearchError("Ничего не найдено");
+      setSearchQuery("");
+      resetSearchResults();
       setIsErr(true);
       return;
-    } else {
-      setIsErr(false);
-      handleSearchButton(searchQuery, isToggleActive);
     }
-  }
-
-  function handlePressEnter(e) {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  }
+  
+    setIsErr(false);
+    handleSearchButton(searchQuery, isToggleActive);
+  }  
 
   return (
     <section className="search-form">
       <form
         className="search-form__form"
         name="search-form"
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSearch}
       >
         <input
           className="search-form__input"
@@ -52,7 +54,6 @@ function SearchForm({
           placeholder="Фильм"
           maxLength="60"
           value={searchQuery || ""}
-          onKeyUp={handlePressEnter}
           onChange={(e) => {
             setIsErr(false);
             setSearchQuery(e.target.value);
@@ -60,8 +61,7 @@ function SearchForm({
         />
         <button
           className="search-form__submit-btn"
-          type="button"
-          onClick={handleSearch}
+          type="submit"
         >
           Найти
         </button>
