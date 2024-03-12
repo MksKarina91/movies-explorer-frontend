@@ -41,24 +41,41 @@ function SavedMovies({ savedMovies, handleSave, handleMovieDelete }) {
   };
 
   const handleSearchButton = (query, isActive) => {
-    setLocalQuery(query);
-    searchSavedMovies(query, isActive);
+    if (query.trim()) {
+      setLocalQuery(query);
+      searchSavedMovies(query, isActive);
+      setHasSearchBeenPerformed(true);
+    } else {
+      setFilteredSavedMovies([]);
+      setSearchError("");
+      setHasSearchBeenPerformed(false);
+    }
   };
 
   useEffect(() => {
     const refilterMovies = () => {
-      let results = savedMovies.filter((movie) =>
-        movie.nameRU.toLowerCase().includes(localQuery.toLowerCase()) || movie.nameEN.toLowerCase().includes(localQuery.toLowerCase())
-      );
-      if (isToggleActive) {
-        results = filterShortMovies(results);
+      if (localQuery.trim()) {
+        let results = savedMovies.filter((movie) =>
+          movie.nameRU.toLowerCase().includes(localQuery.toLowerCase()) || movie.nameEN.toLowerCase().includes(localQuery.toLowerCase())
+        );
+        if (isToggleActive) {
+          results = filterShortMovies(results);
+        }
+        setFilteredSavedMovies(results);
+        if (!results.length) {
+          setSearchError("Ничего не найдено");
+        }
+      } else {
+        setFilteredSavedMovies([]);
+        setSearchError("");
       }
-      setFilteredSavedMovies(results);
     };
+  
     if (hasSearchBeenPerformed) {
       refilterMovies();
     }
   }, [savedMovies, localQuery, isToggleActive, filterShortMovies, hasSearchBeenPerformed]);
+  
   
 
   return (
