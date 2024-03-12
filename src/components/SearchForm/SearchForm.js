@@ -31,7 +31,9 @@ function SearchForm({
       localStorage.removeItem("isToggleActive");
       setSearchError("Ничего не найдено");
       setSearchQuery("");
-      resetSearchResults();
+      if (location.pathname === "/movies" && typeof resetSearchResults === 'function') {
+        resetSearchResults();
+      }
       setIsErr(true);
       return;
     }

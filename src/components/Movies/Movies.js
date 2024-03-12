@@ -17,11 +17,10 @@ import {
 } from "../../utils/constants";
 import { getAllMovies } from "../../utils/MovieApi";
 
-function Movies({ handleSave, savedMovies }) {
+function Movies({ handleSave, savedMovies, handleMovieDelete }) {
   const [isLoading, setIsLoading] = useState(false);
   const [foundMovies, setFoundMovies] = useState([]);
   const [isToggleActive, setIsToggleActive] = useState(JSON.parse(localStorage.getItem("isToggleActive")) || false);
-  const [allMovies, setAllMovies] = useState([]);
   const [searchError, setSearchError] = useState("");
   const [shownMovies, setShownMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState(localStorage.getItem("searchQuery") || "");
@@ -62,8 +61,8 @@ function Movies({ handleSave, savedMovies }) {
     setIsLoading(true);
     try {
       const res = await getAllMovies();
-      setAllMovies(res);
       localStorage.setItem("allMovies", JSON.stringify(res));
+      setSearchError("");
     } catch (err) {
       console.log(err);
       setSearchError("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
@@ -71,12 +70,6 @@ function Movies({ handleSave, savedMovies }) {
       setIsLoading(false);
     }
   }, []);
-
-  useEffect(() => {
-    if (!localStorage.getItem("allMovies") || allMovies.length === 0) {
-      requestFilmApi();
-    }
-  }, [requestFilmApi, allMovies.length]);
 
   const filterShortMovies = useCallback((arr) => {
     return arr.filter((movie) => movie.duration <= SHORT_MOVIE_DURATION);
@@ -100,14 +93,19 @@ function Movies({ handleSave, savedMovies }) {
   }, [filterShortMovies, shownCards]);
 
   const handleSearchButton = useCallback(async (query, currentToggleState) => {
+    setIsLoading(true);
     setShownCards(calculateInitialShownCards());
-    if (allMovies.length === 0) {
+    let storedMovies = JSON.parse(localStorage.getItem("allMovies"));
+    if (storedMovies && storedMovies.length) {
+      searchMovies(storedMovies, query, currentToggleState);
+    } else {
       await requestFilmApi();
+      storedMovies = JSON.parse(localStorage.getItem("allMovies"));
     }
-    const storedMovies = JSON.parse(localStorage.getItem("allMovies")) || allMovies;
     searchMovies(storedMovies, query, currentToggleState);
-  }, [allMovies, requestFilmApi, searchMovies, calculateInitialShownCards]);
-
+    setIsLoading(false);
+  }, [requestFilmApi, searchMovies, calculateInitialShownCards]);
+  
   function resetSearchResults() {
     setFoundMovies([]);
     setShownMovies([]);
@@ -190,6 +188,7 @@ function Movies({ handleSave, savedMovies }) {
         handleSave={handleSave}
         shownCards={shownCards}
         shownMovies={shownMovies}
+        handleMovieDelete={handleMovieDelete}
       />
     )}
     {foundMovies.length > shownCards && (

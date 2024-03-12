@@ -29,6 +29,8 @@ function App() {
   const [infoText, setInfoText] = useState("");
   const [isOpened, setIsOpened] = useState(false);
   const [isUpdated, setIsUpdated] = useState(true);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
+
 
   const activePage = useLocation();
   const navigate = useNavigate();
@@ -58,28 +60,37 @@ function App() {
 
   useEffect(() => {
     const jwt = localStorage.getItem("token");
-    if (jwt) {
+    if (jwt && !loggedIn) {
       Auth.checkToken(jwt)
-        .then((res) => {
+        .then(res => {
           if (res) {
             setLoggedIn(true);
-            Promise.all([
-              api.getUserInfoApi(jwt),
-              api.getSavedMovies(jwt),
-            ])
-            .then(([user, savedList]) => {
-              setCurrentUser(user);
-              setSavedMovies(savedList);
-            })
-            .catch(console.log);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
           signOut();
         });
     }
-  }, [signOut]);
+  }, [signOut, loggedIn]);
+
+  useEffect(() => {
+    if (loggedIn && !userDataLoaded) {
+      Promise.all([
+        api.getUserInfoApi(localStorage.token),
+        api.getSavedMovies(localStorage.token),
+      ])
+      .then(([user, savedList]) => {
+        setCurrentUser(user);
+        setSavedMovies(savedList);
+        setUserDataLoaded(true);
+      })
+      .catch(err => {
+        console.log(err);
+        signOut();
+      });
+    }
+  }, [loggedIn, userDataLoaded, signOut]);
 
   useEffect(() => {
     function handleWindowResize() {
@@ -146,7 +157,7 @@ function App() {
         {isHeaderActive && <Header loggedIn={loggedIn} windowSize={windowSize.innerWidth} />}
         <Routes>
           <Route path="/" element={<Main loggedIn={loggedIn} />} />
-          <Route path="/movies" element={<ProtectedRouteElement element={Movies} savedMovies={savedMovies} handleSave={handleSave} loggedIn={loggedIn} />} />
+          <Route path="/movies" element={<ProtectedRouteElement element={Movies} savedMovies={savedMovies} handleSave={handleSave} handleMovieDelete={handleMovieDelete} loggedIn={loggedIn} />} />
           <Route path="/saved-movies" element={<ProtectedRouteElement element={SavedMovies} savedMovies={savedMovies} handleSave={handleSave} handleMovieDelete={handleMovieDelete} loggedIn={loggedIn} />} />
           <Route path="/profile" element={<ProtectedRouteElement element={Profile} onUpdateUser={handleUpdateUser} onSignOut={signOut} isUpdated={isUpdated} loggedIn={loggedIn} />} />
           <Route path="/signup" element={<Register handleLogin={handleLogin} loggedIn={loggedIn} />} />
