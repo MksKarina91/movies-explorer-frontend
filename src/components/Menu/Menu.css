@@ -86,6 +86,11 @@
   margin-bottom: 0;
 }
 
+.navigation-auth__link--active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .burger-menu__link_active {
   text-decoration: underline;
   text-underline-offset: 4px;
